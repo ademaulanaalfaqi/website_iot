@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Ade\FlowRateController;
+use App\Http\Controllers\Ade\FlowPressureController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,5 +19,7 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::get('/flow_data', [FlowRateController::class, 'apiChartFlow']);
-Route::get('/flow_text', [FlowRateController::class, 'apiTextFlow']);
+Route::get('/flow_data', [FlowPressureController::class, 'apiChartFlow']);
+Route::get('/flow_text', [FlowPressureController::class, 'apiTextFlow']);
+Route::get('/pressure_data', [FlowPressureController::class, 'apiChartPressure']);
+Route::get('/pressure_text', [FlowPressureController::class, 'apiTextPressure']);

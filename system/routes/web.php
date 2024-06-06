@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Ade\FlowRateController;
+use App\Http\Controllers\Ade\FlowPressureController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,6 +18,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/debit-dan-tekanan', [FlowRateController::class, 'flowPressure']);
-Route::get('/getDataDebit', [FlowRateController::class, 'chartDebit']);
-Route::get('/getBilanganDebit', [FlowRateController::class, 'getBilanganDebit']);
+Route::get('/debit-dan-tekanan', [FlowPressureController::class, 'flowPressure']);

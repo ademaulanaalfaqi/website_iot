@@ -28,7 +28,7 @@
                     <div class="container text-center">
                         <div class="row align-items-center">
                             <div class="col border p-1">
-                                <p class="fs-1 m-0" id="" style="color: #002ca3"></p>
+                                <p class="fs-1 m-0" id="pressureText" style="color: #002ca3"></p>
                             </div>
                             <p class="m-0 mt-2" style="font-weight: bold">Pa</p>
                         </div>
@@ -61,7 +61,7 @@
         // Mendapatkan elemen canvas
         var ctx = document.getElementById('realTimeLineChart').getContext('2d');
 
-        var lineChart = new Chart(ctx, {
+        var flowChart = new Chart(ctx, {
             type: 'line',
             data: {
                 labels: [],
@@ -99,7 +99,7 @@
         });
 
         // Fungsi untuk melakukan pembaruan data setiap 5 detik
-        function updateChartData() {
+        function updateChartFlow() {
             $.ajax({
                 url: '/api/flow_data', // Ganti dengan URL API yang sesuai di Laravel
                 method: 'GET',
@@ -112,9 +112,9 @@
                         var flowRates = response.map(data => data.flow_rate);
 
                         // Memperbarui data dan label pada grafik
-                        lineChart.data.labels = labels;
-                        lineChart.data.datasets[0].data = flowRates;
-                        lineChart.update();
+                        flowChart.data.labels = labels;
+                        flowChart.data.datasets[0].data = flowRates;
+                        flowChart.update();
                     }
                 },
                 error: function(error) {
@@ -124,10 +124,10 @@
         }
 
         // Memanggil fungsi pembaruan setiap 5 detik
-        setInterval(updateChartData, 5000); // Ganti dengan interval yang sesuai
+        setInterval(updateChartFlow, 10000); // Ganti dengan interval yang sesuai
 
         // Panggil fungsi pembaruan pertama kali untuk mengisi data awal
-        updateChartData();
+        updateChartFlow();
     </script>
 
     {{-- script text flow --}}
@@ -156,7 +156,7 @@
             displayAPIText();
 
             // Set interval untuk memperbarui data setiap beberapa detik
-            setInterval(displayAPIText, 5000); // Ganti dengan interval yang sesuai
+            setInterval(displayAPIText, 10000); // Ganti dengan interval yang sesuai
         });
 
 
@@ -260,10 +260,10 @@
         var pressureChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+                labels: [],
                 datasets: [{
                     label: 'Tekanan Air',
-                    data: [65, 59, 80, 81, 56, 55, 40],
+                    data: [],
                     borderColor: '#099486',
                     borderWidth: 2,
                     backgroundColor: 'rgba(9, 148, 134, 0.2)',
@@ -292,6 +292,67 @@
                     mode: 'index',
                 }
             }
+        });
+
+        // Fungsi untuk melakukan pembaruan data setiap 5 detik
+        function updateChartPressure() {
+            $.ajax({
+                url: '/api/pressure_data', // Ganti dengan URL API yang sesuai di Laravel
+                method: 'GET',
+                dataType: 'json',
+                success: function(response) {
+                    // Memeriksa apakah ada data baru yang diterima
+                    if (response.length > 0) {
+                        response.reverse();
+                        var labels = response.map(data => data.created_at);
+                        var pressureRates = response.map(data => data.pressure_rate);
+
+                        // Memperbarui data dan label pada grafik
+                        pressureChart.data.labels = labels;
+                        pressureChart.data.datasets[0].data = pressureRates;
+                        pressureChart.update();
+                    }
+                },
+                error: function(error) {
+                    console.error('Error fetching data:', error);
+                }
+            });
+        }
+
+        // Memanggil fungsi pembaruan setiap 5 detik
+        setInterval(updateChartPressure, 10000); // Ganti dengan interval yang sesuai
+
+        // Panggil fungsi pembaruan pertama kali untuk mengisi data awal
+        updateChartPressure();
+    </script>
+
+    {{-- script text flow --}}
+    <script>
+        $(document).ready(function() {
+            // Fungsi untuk mengambil data dari API dan menampilkannya
+            function displayAPIPressureText() {
+                $.ajax({
+                    url: '/api/pressure_text', // Ganti dengan URL API yang sesuai di Laravel
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function(response) {
+                        // Pastikan ada data yang diterima
+                        if (response) {
+                            // Tampilkan data teks dalam elemen #apiText
+                            $('#pressureText').text(response);
+                        }
+                    },
+                    error: function(error) {
+                        console.error('Error fetching data:', error);
+                    }
+                });
+            }
+
+            // Panggil fungsi untuk menampilkan data pertama kali
+            displayAPIPressureText();
+
+            // Set interval untuk memperbarui data setiap beberapa detik
+            setInterval(displayAPIPressureText, 10000); // Ganti dengan interval yang sesuai
         });
     </script>
 @endpush
