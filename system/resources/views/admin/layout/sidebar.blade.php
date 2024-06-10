@@ -126,7 +126,7 @@
         </ul>
       </li>
 
-      <li class="menu-item {{checkRouteActive('flowpressure')}}">
+      <li class="menu-item {{checkRouteActive('flowpressure')}} {{checkRouteActive('quality')}}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons bx bx-layout"></i>
           <div data-i18n="Layouts">Data</div>
@@ -139,7 +139,13 @@
             </a>
           </li>
         </ul>
+        <ul class="menu-sub">
+          <li class="menu-item {{checkSubRouteActive('quality')}}">
+            <a href="{{url('quality')}}" class="menu-link">
+              <div data-i18n="Without menu">Kualitas</div>
+            </a>
+          </li>
+        </ul>
       </li>
-
     </ul>
   </aside>
