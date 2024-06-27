@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Pressure extends Model
 {
     use HasFactory;
-    protected $table = 'pressure';
+    protected $table = 'tekanan';
     protected $primaryKey = 'id';
 
      // Accessor
