@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\Ade\FlowPressureController;
 use App\Http\Controllers\Ari\QualityController;
+use App\Http\Controllers\Ade\DebitController;
+use App\Http\Controllers\Ade\TekananController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,12 +21,12 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::get('/flow_data', [FlowPressureController::class, 'apiChartFlow']);
-Route::get('/flow_text', [FlowPressureController::class, 'apiTextFlow']);
-Route::get('/pressure_data', [FlowPressureController::class, 'apiChartPressure']);
-Route::get('/pressure_text', [FlowPressureController::class, 'apiTextPressure']);
-
-
-
 Route::get('/turbi_data', [QualityController::class, 'apiChartTurbi']);
 Route::get('/turbi_last', [QualityController::class, 'apiLastTurbi']);
+
+Route::get('/data_debit', [DebitController::class, 'apiDebit']);
+Route::get('/flow_data/{id}', [DebitController::class, 'apiChartFlow']);
+Route::get('/flow_text/{id}', [DebitController::class, 'apiTextFlow']);
+Route::get('/data_tekanan', [TekananController::class, 'apiTekanan']);
+Route::get('/pressure_data/{id}', [TekananController::class, 'apiChartPressure']);
+Route::get('/pressure_text/{id}', [TekananController::class, 'apiTextPressure']);

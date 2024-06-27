@@ -97,7 +97,7 @@
         </a>
         <ul class="menu-sub">
           <li class="menu-item {{checkSubRouteActive('debit-dan-tekanan')}}">
-            <a href="{{url('flowpressure')}}" class="menu-link">
+            <a href="{{url('debit-dan-tekanan')}}" class="menu-link">
               <div data-i18n="Without menu">Debit & Tekanan</div>
             </a>
           </li>
@@ -106,6 +106,46 @@
           <li class="menu-item {{checkSubRouteActive('quality')}}">
             <a href="{{url('quality')}}" class="menu-link">
               <div data-i18n="Without menu">Kualitas</div>
+            </a>
+          </li>
+        </ul>
+      </li>
+      
+      <li class="menu-item
+        {{checkRouteActive('debit')}}
+        {{checkRouteActive('tambah-sensor-debit')}}
+        {{checkRouteActive('detail-sensor-debit/{id}')}}
+        {{checkRouteActive('edit-sensor-debit/{id}')}}
+        {{checkRouteActive('tekanan')}}
+        {{checkRouteActive('tambah-sensor-tekanan')}}
+        {{checkRouteActive('detail-sensor-tekanan/{id}')}}
+        {{checkRouteActive('edit-sensor-tekanan/{id}')}}
+        ">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+          <i class="menu-icon tf-icons bx bx-layout"></i>
+          <div data-i18n="Layouts">Debit & Tekanan</div>
+        </a>
+        <ul class="menu-sub">
+          <li class="menu-item
+            {{checkSubRouteActive('debit')}}
+            {{checkSubRouteActive('tambah-sensor-debit')}}
+            {{checkSubRouteActive('detail-sensor-debit/{id}')}}
+            {{checkSubRouteActive('edit-sensor-debit/{id}')}}
+            ">
+            <a href="{{url('debit')}}" class="menu-link">
+              <div data-i18n="Without menu">Debit</div>
+            </a>
+          </li>
+        </ul>
+        <ul class="menu-sub">
+          <li class="menu-item
+            {{checkSubRouteActive('tekanan')}}
+            {{checkSubRouteActive('tambah-sensor-tekanan')}}
+            {{checkSubRouteActive('detail-sensor-tekanan/{id}')}}
+            {{checkSubRouteActive('edit-sensor-tekanan/{id}')}}
+            ">
+            <a href="{{url('tekanan')}}" class="menu-link">
+              <div data-i18n="Without menu">Tekanan</div>
             </a>
           </li>
         </ul>

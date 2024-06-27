@@ -55,7 +55,11 @@
 
     <link rel="stylesheet" href="{{ url('public') }}/sneat/assets/vendor/libs/apex-charts/apex-charts.css" />
 
-    <!-- Page CSS -->
+    <!-- leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
+    {{-- datatable --}}
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.bootstrap5.css">
 
     <!-- Helpers -->
     <script src="{{ url('public') }}/sneat/assets/vendor/js/helpers.js"></script>
@@ -126,15 +130,27 @@
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
-
+    
     {{-- chart js --}}
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-gauge@0.1.7/dist/chartjs-gauge.min.js"></script>
-
+    
     {{-- apexchart --}}
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     
+    {{-- leaflet --}}
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    
+    {{-- datatable --}}
+    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.bootstrap5.js"></script>
+
+    {{-- swal --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
     @stack('debit')
+    @stack('tekanan')
     @stack('kualitas')
   </body>
 </html>

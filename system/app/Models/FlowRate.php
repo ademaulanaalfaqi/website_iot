@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class FlowRate extends Model
 {
     use HasFactory;
-    protected $table = 'flow';
+    protected $table = 'debit';
     protected $primaryKey = 'id';
 
      // Accessor
