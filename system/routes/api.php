@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Ade\FlowPressureController;
+use App\Http\Controllers\Ari\QualityController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,3 +24,8 @@ Route::get('/flow_data', [FlowPressureController::class, 'apiChartFlow']);
 Route::get('/flow_text', [FlowPressureController::class, 'apiTextFlow']);
 Route::get('/pressure_data', [FlowPressureController::class, 'apiChartPressure']);
 Route::get('/pressure_text', [FlowPressureController::class, 'apiTextPressure']);
+
+
+
+Route::get('/turbi_data', [QualityController::class, 'apiChartTurbi']);
+Route::get('/turbi_last', [QualityController::class, 'apiLastTurbi']);

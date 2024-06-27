@@ -6,10 +6,10 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Quality extends Model
+class Turbi extends Model
 {
     use HasFactory;
-    protected $table = 'datasensor';
+    protected $table = 'data_turbi';
     protected $primaryKey = 'id';
 
     public function getFormattedCreatedAtAttribute()

@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\Ade\FlowPressureController;
-use App\Http\Controllers\Ari\QualityController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Ari\QualityController;
+use App\Http\Controllers\Ade\FlowPressureController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,5 +21,5 @@ Route::get('/', function () {
 
 Route::get('/debit-dan-tekanan', [FlowPressureController::class, 'flowPressure']);
 
-Route::get('/quality', [QualityController::class, 'quality']);
+Route::get('/quality', [QualityController::class, 'turbi']);
 
