@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Ade;
 
+use App\Exports\TekananExport;
+use Carbon\Carbon;
 use App\Models\Sensor;
 use App\Models\Pressure;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 
 class TekananController extends Controller
 {
@@ -68,6 +71,18 @@ class TekananController extends Controller
         $id->delete();
 
         return redirect('tekanan');
+    }
+
+    function exportDataSensorTekanan(Request $request, $id)
+    {
+        $request->validate([
+            'export_date' => 'required|date',
+        ]);
+
+        $exportDate = $request->input('export_date');
+        $fileName = $id . '_' . $exportDate . '.xlsx';
+
+        return Excel::download(new TekananExport($id, $exportDate), $fileName);
     }
 
     public function apiChartPressure($id)
