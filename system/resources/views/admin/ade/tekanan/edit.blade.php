@@ -39,7 +39,7 @@
 
 @push('tekanan')
     <script>
-        var map = L.map('map').setView([-1.830872, 109.988321], 12);
+        var map = L.map('map').setView([{{ $sensortekanan->latitude }}, {{ $sensortekanan->longitude }}], 14);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors'

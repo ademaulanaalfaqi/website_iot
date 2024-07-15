@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Ade;
 
+use Carbon\Carbon;
 use App\Models\Sensor;
 use App\Models\FlowRate;
 use Illuminate\Support\Str;
+use App\Exports\DebitExport;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DebitController extends Controller
 {
@@ -69,6 +72,18 @@ class DebitController extends Controller
         $id->delete();
 
         return redirect('debit');
+    }
+
+    function exportDataSensorDebit(Request $request, $id)
+    {
+        $request->validate([
+            'export_date' => 'required|date',
+        ]);
+
+        $exportDate = $request->input('export_date');
+        $fileName = $id . '_' . $exportDate . '.xlsx';
+
+        return Excel::download(new DebitExport($id, $exportDate), $fileName);
     }
 
     public function apiChartFlow($id)

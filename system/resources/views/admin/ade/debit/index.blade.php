@@ -1,6 +1,5 @@
 @extends('admin.base')
 @section('content')
-    
     <div class="row mb-3">
         <div class="col-md-6">
             <div class="card">
@@ -22,35 +21,23 @@
                             </thead>
                             <tbody>
                                 @foreach ($sensor_debit as $sensor)
-                                    <tr data-id="{{$sensor->id}}">
+                                    <tr data-id="{{ $sensor->id }}">
                                         <td>{{ $sensor->id }}</td>
                                         <td>{{ $sensor->keterangan }}</td>
-                                        <td id="debit">{{$sensor->debit}} L/min</td>
-                                        <td id="total">{{$sensor->total_liter}} L</td>
+                                        <td id="debit">{{ $sensor->debit }} L/min</td>
+                                        <td id="total">{{ $sensor->total_liter }} L</td>
                                         <td>
-                                            <div class="btn-group">
-                                                <a href="{{url('detail-sensor-debit', $sensor->id)}}"
-                                                    class="btn btn-dark"
-                                                    data-bs-toggle="tooltip"
-                                                    data-bs-offset="0,4"
-                                                    data-bs-placement="top"
-                                                    data-bs-html="true"
-                                                    title="<span>Detail</span>"><i class="bx bx-info-circle"></i></a>
-                                                <a href="{{url('edit-sensor-debit', $sensor->id)}}"
-                                                    class="btn btn-warning"
-                                                    data-bs-toggle="tooltip"
-                                                    data-bs-offset="0,4"
-                                                    data-bs-placement="top"
-                                                    data-bs-html="true"
-                                                    title="<span>Edit</span>"><i class="bx bxs-edit"></i></a>
-                                                <button class="btn btn-danger tombol-delete"
-                                                    data-bs-toggle="tooltip"
-                                                    data-bs-offset="0,4"
-                                                    data-bs-placement="top"
-                                                    data-bs-html="true"
-                                                    data-id="{{$sensor->id}}"
-                                                    title="<span>Hapus</span>"><i class="bx bx-trash"></i></button>
-                                            </div>
+                                            <button type="button"
+                                                class="btn p-0 dropdown-toggle hide-arrow"
+                                                data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="bx bx-dots-vertical-rounded"></i>
+                                            </button>
+                                            <ul class="dropdown-menu dropdown-menu-end">
+                                                <li><a class="dropdown-item" href="{{ url('detail-sensor-debit', $sensor->id) }}">Detail</a></li>
+                                                <li><a class="dropdown-item" href="{{ url('edit-sensor-debit', $sensor->id) }}">Edit</a></li>
+                                                <li><hr class="dropdown-divider"></li>
+                                                <li><a class="dropdown-item tombol-delete" data-id="{{ $sensor->id }}"><span class="text-danger">Hapus</span></a></li>
+                                            </ul>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -72,7 +59,6 @@
             </div>
         </div>
     </div>
-
 @endsection
 
 @push('debit')

@@ -3,36 +3,46 @@
     <div class="row">
         <div class="col-md-6 mb-3">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="card mb-3">
                         <div class="card-body">
-                            <h5 class="card-title">Debit Air</h5>
-                            <div class="container text-center">
-                                <div class="row align-items-center">
-                                    <div class="col border p-1">
-                                        <p class="fs-1 m-0" id="apiText" style="color: #566a7f"></p>
+                            <div class="row row-bordered">
+                                <div class="col-md-6">
+                                    <h5 class="card-title m-2">Debit Air</h5>
+                                    <div class="container text-center mt-4">
+                                        <div class="row align-items-center">
+                                            <div class="col border p-1">
+                                                <p class="fs-1 m-0" id="apiText" style="color: #566a7f"></p>
+                                            </div>
+                                            <p class="m-0 my-2" style="font-weight: bold">L/min</p>
+                                        </div>
                                     </div>
-                                    <p class="m-0 mt-2" style="font-weight: bold">L/min</p>
+                                </div>
+                                <div class="col-md-6">
+                                    {{-- <a class="btn btn-success float-end mt-1" href="{{ url('export-data-sensor-debit', $sensordebit->id) }}">Export Data</a> --}}
+                                    <h5 class="card-title m-2">Total</h5>
+                                    <div class="container text-center mt-4">
+                                        <div class="row align-items-center">
+                                            <div class="col border p-1">
+                                                <p class="fs-1 m-0" id="apiTextTotal" style="color: #566a7f"></p>
+                                            </div>
+                                            <p class="m-0 my-2" style="font-weight: bold">m³</p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+                            <form action="{{ url('export-data-sensor-debit', $sensordebit->id) }}" method="POST" id="exportForm">
+                                @csrf
+                                <div class="input-group mt-3">
+                                    <input type="date" class="form-control" aria-describedby="button-addon2" name="export_date">
+                                    <button class="btn btn-outline-success" type="submit" id="button-addon2">Export</button>
+                                </div>
+                            </form>                            
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">Total</h5>
-                            <div class="container text-center">
-                                <div class="row align-items-center">
-                                    <div class="col border p-1">
-                                        <p class="fs-1 m-0" id="apiTextTotal" style="color: #566a7f"></p>
-                                    </div>
-                                    <p class="m-0 mt-2" style="font-weight: bold">L/min</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            </div>
+            <div class="row">
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">

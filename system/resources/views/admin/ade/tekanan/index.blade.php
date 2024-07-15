@@ -25,29 +25,17 @@
                                         <td>{{ $sensor->keterangan }}</td>
                                         <td id="tekanan">{{ $sensor->tekanan }} psi</td>
                                         <td>
-                                            <div class="btn-group">
-                                                <a href="{{ url('detail-sensor-tekanan', $sensor->id) }}"
-                                                    class="btn btn-icon btn-dark"
-                                                    data-bs-toggle="tooltip"
-                                                    data-bs-offset="0,4"
-                                                    data-bs-placement="top"
-                                                    data-bs-html="true"
-                                                    title="<span>Detail</span>"><i class="bx bx-info-circle"></i></a>
-                                                <a href="{{ url('edit-sensor-tekanan', $sensor->id) }}"
-                                                    class="btn btn-icon btn-warning"
-                                                    data-bs-toggle="tooltip"
-                                                    data-bs-offset="0,4"
-                                                    data-bs-placement="top"
-                                                    data-bs-html="true"
-                                                    title="<span>Edit</span>"><i class="bx bxs-edit"></i></a>
-                                                <button class="btn btn-icon btn-danger tombol-delete"
-                                                    data-bs-toggle="tooltip"
-                                                    data-bs-offset="0,4"
-                                                    data-bs-placement="top"
-                                                    data-bs-html="true"
-                                                    data-id="{{$sensor->id}}"
-                                                    title="<span>Hapus</span>"><i class="bx bx-trash"></i></button>
-                                            </div>
+                                            <button type="button"
+                                                class="btn p-0 dropdown-toggle hide-arrow"
+                                                data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="bx bx-dots-vertical-rounded"></i>
+                                            </button>
+                                            <ul class="dropdown-menu dropdown-menu-end">
+                                                <li><a class="dropdown-item" href="{{ url('detail-sensor-tekanan', $sensor->id) }}">Detail</a></li>
+                                                <li><a class="dropdown-item" href="{{ url('edit-sensor-tekanan', $sensor->id) }}">Edit</a></li>
+                                                <li><hr class="dropdown-divider"></li>
+                                                <li><a class="dropdown-item tombol-delete" data-id="{{ $sensor->id }}"><span class="text-danger">Hapus</span></a></li>
+                                            </ul>
                                         </td>
                                     </tr>
                                 @endforeach

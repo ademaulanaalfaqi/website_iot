@@ -6,8 +6,9 @@
                 <div class="card-body">
                     <div class="row row-bordered">
                         <div class="col-md-8">
-                            <h5 class="card-title">Statistik Tekanan Air</h5>
-                            <div class="container text-center">
+                            {{-- <a class="btn btn-success float-end" href="{{ url('export-data-sensor-tekanan', $sensortekanan->id) }}">Export Data</a>  --}}
+                            <h5 class="card-title mt-2">Statistik Tekanan Air</h5>
+                            <div class="container text-center mt-4">
                                 <div class="row align-items-center">
                                     <div class="col border p-1">
                                         <p class="fs-1 m-0" id="pressureText" style="color: #566a7f"></p>
@@ -23,6 +24,13 @@
                             </div>
                         </div>
                     </div>
+                    <form action="{{ url('export-data-sensor-tekanan', $sensortekanan->id) }}" method="POST" id="exportForm">
+                        @csrf
+                        <div class="input-group mt-3">
+                            <input type="date" class="form-control" aria-describedby="button-addon2" name="export_date">
+                            <button class="btn btn-outline-success" type="submit" id="button-addon2">Export</button>
+                        </div>
+                    </form>
                 </div>
             </div>
             <div class="col-md-12">

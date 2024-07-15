@@ -1,10 +1,11 @@
 <?php
 
-use App\Http\Controllers\Ari\QualityController;
-use App\Http\Controllers\Ade\DebitController;
-use App\Http\Controllers\Ade\TekananController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BerandaController;
+use App\Http\Controllers\Ade\DebitController;
+use App\Http\Controllers\Ade\TekananController;
+use App\Http\Controllers\Ari\QualityController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +21,9 @@ use Illuminate\Support\Facades\Route;
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
+
+
+Route::get('/data-para-sensor', [BerandaController::class, 'getDataParaSensor']);
 
 Route::get('/turbi_data', [QualityController::class, 'apiChartTurbi']);
 Route::get('/turbi_last', [QualityController::class, 'apiLastTurbi']);
