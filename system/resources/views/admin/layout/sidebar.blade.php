@@ -90,27 +90,28 @@
         </a>
       </li>
 
-      <li class="menu-item {{checkRouteActive('debit-dan-tekanan')}} {{checkRouteActive('quality')}}">
+      <li class="menu-item {{checkRouteActive('ph')}} {{checkRouteActive('kekeruhan')}}
+       {{checkRouteActive('detail-sensor-ph/{ph}')}} {{checkRouteActive('detail-sensor-kekeruhan/{turbi}')}}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons bx bx-layout"></i>
-          <div data-i18n="Layouts">Data</div>
+          <div data-i18n="Layouts">Kualitas Air</div>
         </a>
         <ul class="menu-sub">
-          <li class="menu-item {{checkSubRouteActive('debit-dan-tekanan')}}">
-            <a href="{{url('debit-dan-tekanan')}}" class="menu-link">
-              <div data-i18n="Without menu">Debit & Tekanan</div>
+          <li class="menu-item {{checkSubRouteActive('ph')}} {{checkSubRouteActive('detail-sensor-ph/{ph}')}}">
+            <a href="{{url('ph')}}" class="menu-link">
+              <div data-i18n="Without menu">Ph</div>
             </a>
           </li>
         </ul>
         <ul class="menu-sub">
-          <li class="menu-item {{checkSubRouteActive('quality')}}">
-            <a href="{{url('quality')}}" class="menu-link">
-              <div data-i18n="Without menu">Kualitas</div>
+          <li class="menu-item {{checkSubRouteActive('kekeruhan')}} {{checkSubRouteActive('detail-sensor-kekeruhan/{turbi}')}}">
+            <a href="{{url('kekeruhan')}}" class="menu-link">
+              <div data-i18n="Without menu">Turbidity</div>
             </a>
           </li>
         </ul>
       </li>
-      
+
       <li class="menu-item
         {{checkRouteActive('debit')}}
         {{checkRouteActive('tambah-sensor-debit')}}

@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\Ari\QualityController;
 use App\Http\Controllers\Ade\DebitController;
 use App\Http\Controllers\Ade\TekananController;
+use App\Http\Controllers\Ari\PhController;
+use App\Http\Controllers\Ari\TurbiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,9 +22,15 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::get('/turbi_data', [QualityController::class, 'apiChartTurbi']);
-Route::get('/turbi_last', [QualityController::class, 'apiLastTurbi']);
+//arii
+Route::get('/data_turbi', [TurbiController::class, 'apiTurbi']);
+Route::get('/data_last_turbi/{id}', [TurbiController::class, 'apiLastTurbi']);
+Route::get('/data_turbi_chart/{id}', [TurbiController::class, 'apiChartTurbi']);
+Route::get('/data_ph', [PhController::class, 'apiPh']);
+Route::get('/data_last_ph/{id}', [PhController::class, 'apiLastPh']);
+Route::get('/data_ph_chart/{id}', [PhController::class, 'apiChartPh']);
 
+//ade
 Route::get('/data_debit', [DebitController::class, 'apiDebit']);
 Route::get('/flow_data/{id}', [DebitController::class, 'apiChartFlow']);
 Route::get('/flow_text/{id}', [DebitController::class, 'apiTextFlow']);

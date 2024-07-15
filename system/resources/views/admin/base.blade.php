@@ -152,5 +152,7 @@
     @stack('debit')
     @stack('tekanan')
     @stack('kualitas')
+    @stack('turbidity')
+    @stack('ph')
   </body>
 </html>
