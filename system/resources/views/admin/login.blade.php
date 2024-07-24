@@ -75,7 +75,7 @@
             <div class="card-body">
               <h4 class="mb-2">Welcome to Website IoT! 👋</h4>
               <p class="mb-4">Silahkan masuk ke sistem.</p>
-
+              @include('admin.notif')
               <form id="formAuthentication" class="mb-3" action="{{url('loginProses')}}" method="POST">
                 @csrf
                 <div class="mb-3">
@@ -87,6 +87,7 @@
                     name="username"
                     placeholder="Masukkan username kamu"
                     autofocus
+                    required
                   />
                 </div>
                 <div class="mb-3 form-password-toggle">
@@ -101,6 +102,7 @@
                       name="password"
                       placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                       aria-describedby="password"
+                      required
                     />
                     <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                   </div>

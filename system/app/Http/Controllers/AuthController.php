@@ -23,11 +23,9 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             return redirect()->intended('/beranda');
+        } else {
+            return back()->with('danger', 'Mohon periksa username dan password anda.');
         }
-
-        return back()->withErrors([
-            'username' => 'The provided credentials do not match our records.',
-        ]);
     }
 
     public function logout()

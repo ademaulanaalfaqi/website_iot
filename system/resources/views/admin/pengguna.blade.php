@@ -58,17 +58,17 @@
                         <div class="row">
                             <div class="col mb-3">
                                 <label class="form-label">Nama</label>
-                                <input type="text" name="nama" class="form-control" />
+                                <input type="text" name="nama" class="form-control" required/>
                             </div>
                         </div>
                         <div class="row g-2">
                             <div class="col mb-0">
                                 <label class="form-label">Username</label>
-                                <input type="text" name="username" class="form-control" />
+                                <input type="text" name="username" class="form-control" required/>
                             </div>
                             <div class="col mb-0">
                                 <label class="form-label">Password</label>
-                                <input type="password" name="password" class="form-control" />
+                                <input type="password" name="password" class="form-control" required/>
                             </div>
                         </div>
                     </div>
@@ -98,13 +98,13 @@
                             <div class="row">
                                 <div class="col mb-3">
                                     <label class="form-label">Nama</label>
-                                    <input type="text" name="nama" class="form-control" value="{{$pengguna->nama}}"/>
+                                    <input type="text" name="nama" class="form-control" required value="{{$pengguna->nama}}"/>
                                 </div>
                             </div>
                             <div class="row g-2">
                                 <div class="col mb-0">
                                     <label class="form-label">Username</label>
-                                    <input type="text" name="username" class="form-control" value="{{$pengguna->username}}"/>
+                                    <input type="text" name="username" class="form-control" required value="{{$pengguna->username}}"/>
                                 </div>
                                 <div class="col mb-0">
                                     <label class="form-label">Password</label>
