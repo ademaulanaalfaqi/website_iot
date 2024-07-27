@@ -75,3 +75,14 @@ Route::put('/edit-sensor-ph/{ph}', [PhController::class, 'updateSensorPh']);
 Route::delete('/hapus-sensor-ph/{ph}', [PhController::class, 'hapusSensorPh']);
 Route::get('/download-today-report-ph/{ph}', [PhController::class, 'downloadTodayReportPh']);
 // Route::get('/download/reports/ph', [PhController::class, 'downloadReportsPh'])->name('download.reportsPh');
+
+
+// route::get('/detail-sensor-meteran/{id}', [MeteranController::class, 'detailSensorMeteran']);
+Route::get('/meteran', [PelangganController::class, 'meteran']);
+Route::get('/meter-data/{id}', [PelangganController::class, 'chartMeter']);
+Route::get('/pelanggan', [PelangganController::class, 'index']);
+Route::get('/tambah-pelanggan', [PelangganController::class, 'create']);
+Route::post('/tambah-pelanggan', [PelangganController::class, 'store']);
+Route::get('/detail-pelanggan/{id}', [PelangganController::class, 'detail']);
+Route::get('/edit-pelanggan/{id}', [PelangganController::class, 'edit']);
+Route::post('/edit-pelanggan/{id}', [PelangganController::class, 'update']);
