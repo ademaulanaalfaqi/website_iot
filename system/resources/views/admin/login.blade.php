@@ -75,7 +75,7 @@
             <div class="card-body">
               <h4 class="mb-2">Welcome to Website IoT! 👋</h4>
               <p class="mb-4">Silahkan masuk ke sistem.</p>
-
+              @include('admin.notif')
               <form id="formAuthentication" class="mb-3" action="{{url('loginProses')}}" method="POST">
                 @csrf
                 <div class="mb-3">

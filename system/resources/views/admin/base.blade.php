@@ -27,7 +27,7 @@
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
 
-    <title>Dashboard - Analytics | Sneat - Bootstrap 5 HTML Admin Template - Pro</title>
+    <title>Website IoT</title>
 
     <meta name="description" content="" />
 
@@ -155,5 +155,6 @@
     @stack('kualitas')
     @stack('turbidity')
     @stack('ph')
+    @stack('meteran')
   </body>
 </html>

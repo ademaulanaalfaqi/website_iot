@@ -55,10 +55,6 @@
 
     {{-- script radial bar tekanan --}}
     <script>
-        function hitungPersentase(value, max) {
-            return ((value / max) * 100);
-        }
-
         async function fetchPressureData() {
             try {
                 const response = await fetch('/api/pressure_text/{{$sensortekanan->id}}');
@@ -75,8 +71,9 @@
 
         async function inisialisasiChart() {
             const nilaiPressure = await fetchPressureData();
-            const maxPressure = 50;
-            var hasilPersentase = hitungPersentase(nilaiPressure.nilai_tekanan, maxPressure);
+            const maxPressure = 10;
+            const nilaiTekanan = nilaiPressure.nilai_tekanan;
+            var hasilPersentase = (nilaiTekanan / maxPressure) * 100;
             // console.log(nilaiPressure);
 
             var options = {
@@ -113,7 +110,7 @@
                                 offsetY: -2,
                                 fontSize: '16px',
                                 formatter: function(val) {
-                                    return val + '%';
+                                    return nilaiTekanan;
                                 }
                             }
                         }
@@ -136,6 +133,19 @@
             } else {
                 // Update chart dengan data baru
                 chart.updateSeries([hasilPersentase]);
+                chart.updateOptions({
+                    plotOptions: {
+                        radialBar: {
+                            dataLabels: {
+                                value: {
+                                    formatter: function(val) {
+                                        return nilaiTekanan; // Tampilkan nilai tekanan asli dengan 2 desimal
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
             }
         }
         setInterval(inisialisasiChart, 10000);

@@ -9,7 +9,7 @@ use App\Http\Controllers\BerandaController;
 use App\Http\Controllers\Ade\DebitController;
 use App\Http\Controllers\Ade\TekananController;
 use App\Http\Controllers\AuthController;
-
+use App\Http\Controllers\Jupi\PelangganController;
 
 /*
 |--------------------------------------------------------------------------
@@ -76,3 +76,12 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
+// route::get('/detail-sensor-meteran/{id}', [MeteranController::class, 'detailSensorMeteran']);
+Route::get('/meteran', [PelangganController::class, 'meteran']);
+Route::get('/meter-data/{id}', [PelangganController::class, 'chartMeter']);
+Route::get('/pelanggan', [PelangganController::class, 'index']);
+Route::get('/tambah-pelanggan', [PelangganController::class, 'create']);
+Route::post('/tambah-pelanggan', [PelangganController::class, 'store']);
+Route::get('/detail-pelanggan/{id}', [PelangganController::class, 'detail']);
+Route::get('/edit-pelanggan/{id}', [PelangganController::class, 'edit']);
+Route::post('/edit-pelanggan/{id}', [PelangganController::class, 'update']);
