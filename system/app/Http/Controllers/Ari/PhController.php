@@ -5,9 +5,12 @@ namespace App\Http\Controllers\Ari;
 use App\Models\Ph;
 use Carbon\Carbon;
 use App\Models\Sensor;
+use App\Exports\PhExport;
+use App\Exports\PhPilExport;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Response;
 
 class PhController extends Controller
@@ -25,15 +28,7 @@ class PhController extends Controller
     public function detailSensorPh($ph)
     {
         $data['sensorph'] = Sensor::find($ph);
-        // $historyLaporan = Ph::where('id_sensor', $ph)->get();
-        $data['historyLaporan'] = Ph::where('id_sensor', $ph)->get();
-
-        // Kelompokkan data berdasarkan tanggal
-        // $groupedHistoryLaporan = $historyLaporan->groupBy(function ($date) {
-        //     return \Carbon\Carbon::parse($date->created_at)->format('Y-m-d');
-        // });
-
-        // $data['historyLaporan'] = $groupedHistoryLaporan;
+        $data['historyLaporan'] = Ph::where('id_sensor', $ph)->orderBy('id', 'desc')->get();
 
         return view('admin.ari.ph.detail', $data);
     }
@@ -119,43 +114,24 @@ class PhController extends Controller
 
     public function downloadTodayReportPh($ph)
     {
-        $todayReports = Ph::where('id_sensor',$ph)->orderBy('id', 'desc')->take(24)->get();
+        $date = Carbon::now()->format('Y-m-d');
+        $fileName = $ph . '_' . $date . '.xlsx';
+        return Excel::download(new PhExport($ph), $fileName);
 
-        $csvData = "Id Sensor,Tanggal Laporan,Nilai Ph\n";
-        foreach ($todayReports as $report) {
-            $csvData .= "{$report->id_sensor},{$report->created_at},{$report->ph_value}\n";
-        }
-
-        $fileName = 'laporan_pH_hari_ini.csv';
-        $headers = [
-            'Content-type' => 'text/csv',
-            'Content-Disposition' => "attachment; filename={$fileName}",
-        ];
-
-        return Response::make($csvData, 200, $headers);
     }
 
-    // public function downloadReportsPh(Request $request)
-    // {
-    //     $ids = explode(',', $request->query('ids'));
-    //     $reports = Ph::whereIn('id', $ids)->get();
+    public function downloadReportsPh(Request $request, $ph)
+    {
+        $request->validate([
+            'startDate' => 'required|date',
+            'endDate' => 'required|date',
+        ]);
 
-    //     if ($reports->isEmpty()) {
-    //         return redirect()->back()->with('error', 'Laporan tidak ditemukan.');
-    //     }
+        $startDate = $request->input('startDate');
+        $endDate = $request->input('endDate');
+        $fileName = $ph . '_' . $startDate . ' hingga ' . $endDate . '.xlsx';
 
-    //     $csvData = "Id Sensor,Tanggal Laporan,Nilai pH\n";
-    //     foreach ($reports as $report) {
-    //         $csvData .= "{$report->id_sensor},{$report->created_at},{$report->ph_value}\n";
-    //     }
+        return Excel::download(new PhPilExport($ph, $startDate, $endDate), $fileName);
 
-    //     $date = Carbon::parse($reports->first()->created_at)->format('Y-m-d');
-    //     $fileName = count($reports) > 1 ? "laporan_ph_{$date}.csv" : "laporan_ph_{$date}.csv";
-    //     $headers = [
-    //         'Content-type' => 'text/csv',
-    //         'Content-Disposition' => "attachment; filename={$fileName}",
-    //     ];
-
-    //     return Response::make($csvData, 200, $headers);
-    // }
+    }
 }

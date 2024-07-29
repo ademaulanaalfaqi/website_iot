@@ -70,7 +70,7 @@
                         </div>
                     </div>
                     <span class="fw-semibold d-block mb-1">pH</span>
-                    <h3 class="card-title mb-2">323</h3>
+                    <h3 class="card-title mb-2">{{$ph}} pH</h3>
                 </div>
             </div>
         </div>
@@ -83,7 +83,7 @@
                         </div>
                     </div>
                     <span class="fw-semibold d-block mb-1">Turbidity</span>
-                    <h3 class="card-title mb-2">232</h3>
+                    <h3 class="card-title mb-2">{{$turbi}} NTU</h3>
                 </div>
             </div>
         </div>
@@ -209,4 +209,7 @@
             setInterval(displayAPIPressureText, 10000);
         });
     </script>
+
+    {{-- script ari --}}
+
 @endpush

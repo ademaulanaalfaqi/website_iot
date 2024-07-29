@@ -8,16 +8,19 @@
                         <h5 class="m-0 me-2">Nilai turbidity air sekarang (NTU)</h5>
                         <small class="text-muted">Hitungan NTU/jam</small>
                     </div>
-                    <div class="dropdown">
-                        <button class="btn p-0" type="button" id="orederStatistics" data-bs-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                            <i class="bx bx-dots-vertical-rounded"></i>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="orederStatistics">
-                            <a class="dropdown-item" href="{{ url('download-today-report-turbi', $sensorturbi->id) }}">Unduh Laporan Hari
-                                Ini</a>
+                    <form action="{{ url('download-today-report-turbi', $sensorturbi->id) }}"  method="POST">
+                        @csrf
+                        <div class="dropdown">
+                            <button class="btn p-0" type="button" id="orederStatistics" data-bs-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                <i class="bx bx-dots-vertical-rounded"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="orederStatistics">
+                                <button class="btn dropdown-item" type="submit">Unduh Laporan Hari
+                                    Ini</button>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
                 <div class="card-body">
                     <div class="d-flex justify-content-center align-items-center mb-3">
@@ -55,9 +58,19 @@
     </div>
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">
-                Histori Pengukuran
-            </h5>
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 class="card-title mb-0">
+                    Histori Pengukuran
+                </h5>
+                <form action="{{ url('download-reports-turbi', $sensorturbi->id) }}" method="POST" id="exportForm" class="d-flex">
+                    @csrf
+                    <div class="input-group">
+                        <input type="date" class="form-control" aria-describedby="button-addon2" name="startDate" required>
+                        <input type="date" class="form-control" aria-describedby="button-addon2" name="endDate" required>
+                        <button class="btn btn-outline-success" type="submit" id="button-addon2">Export</button>
+                    </div>
+                </form>
+            </div>
             <div class="table-responsive">
                 <table class="table table-bordered" id="datatable">
                     <thead>

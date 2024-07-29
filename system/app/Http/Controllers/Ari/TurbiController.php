@@ -6,8 +6,11 @@ use Carbon\Carbon;
 use App\Models\Turbi;
 use App\Models\Sensor;
 use Illuminate\Support\Str;
+use App\Exports\TurbiExport;
+use App\Exports\TurbiPilExport;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Response;
 
 class TurbiController extends Controller
@@ -25,15 +28,7 @@ class TurbiController extends Controller
     public function detailSensorTurbi($turbi)
     {
         $data['sensorturbi'] = Sensor::find($turbi);
-        // $historyLaporan = Turbi::where('id_sensor', $turbi)->get();
-        $data['historyLaporan'] = Turbi::where('id_sensor', $turbi)->get();
-
-        // // Kelompokkan data berdasarkan tanggal
-        // $groupedHistoryLaporan = $historyLaporan->groupBy(function ($date) {
-        //     return \Carbon\Carbon::parse($date->created_at)->format('Y-m-d');
-        // });
-
-        // $data['historyLaporan'] = $groupedHistoryLaporan;
+        $data['historyLaporan'] = Turbi::where('id_sensor', $turbi)->orderBy('id', 'desc')->get();
 
         return view('admin.ari.turbi.detail', $data);
     }
@@ -117,43 +112,25 @@ class TurbiController extends Controller
 
     public function downloadTodayReportTurbi($turbi)
     {
-        $todayReports = Turbi::where('id_sensor', $turbi)->orderBy('id', 'desc')->take(24)->get();
 
-        $csvData = "Id Sensor,Tanggal Laporan,Nilai NTU\n";
-        foreach ($todayReports as $report) {
-            $csvData .= "{$report->id_sensor},{$report->created_at},{$report->turbi_ntu}\n";
-        }
+        $date = Carbon::now()->format('Y-m-d');
+        $fileName = $turbi . '_' . $date . '.xlsx';
+        return Excel::download(new TurbiExport($turbi), $fileName);
 
-        $fileName = 'laporan_turbidity_hari_ini.csv';
-        $headers = [
-            'Content-type' => 'text/csv',
-            'Content-Disposition' => "attachment; filename={$fileName}",
-        ];
-
-        return Response::make($csvData, 200, $headers);
     }
 
-    // public function downloadReportsTurbi(Request $request)
-    // {
-    //     $ids = explode(',', $request->query('ids'));
-    //     $reports = Turbi::whereIn('id', $ids)->get();
+    public function downloadReportsTurbi(Request $request,$turbi)
+    {
+        $request->validate([
+            'startDate' => 'required|date',
+            'endDate' => 'required|date',
+        ]);
 
-    //     if ($reports->isEmpty()) {
-    //         return redirect()->back()->with('error', 'Laporan tidak ditemukan.');
-    //     }
+        $startDate = $request->input('startDate');
+        $endDate = $request->input('endDate');
+        $fileName = $turbi . '_' . $startDate . ' hingga ' . $endDate . '.xlsx';
 
-    //     $csvData = "Id Sensor,Tanggal Laporan,Nilai NTU\n";
-    //     foreach ($reports as $report) {
-    //         $csvData .= "{$report->id_sensor},{$report->created_at},{$report->turbi_ntu}\n";
-    //     }
+        return Excel::download(new TurbiPilExport($turbi, $startDate, $endDate), $fileName);
 
-    //     $date = Carbon::parse($reports->first()->created_at)->format('Y-m-d');
-    //     $fileName = count($reports) > 1 ? "laporan_turbidity_{$date}.csv" : "laporan_turbidity_{$date}.csv";
-    //     $headers = [
-    //         'Content-type' => 'text/csv',
-    //         'Content-Disposition' => "attachment; filename={$fileName}",
-    //     ];
-
-    //     return Response::make($csvData, 200, $headers);
-    // }
+    }
 }

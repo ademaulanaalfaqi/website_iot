@@ -8,15 +8,18 @@
                         <h5 class="m-0 me-2">pH hari ini</h5>
                         <small class="text-muted">Hitungan pH/jam</small>
                     </div>
-                    <div class="dropdown">
-                        <button class="btn p-0" type="button" id="orederStatistics" data-bs-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                            <i class="bx bx-dots-vertical-rounded"></i>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="orederStatistics">
-                            <a class="dropdown-item" href="{{ url('download-today-report-ph',$sensorph->id)}}">Unduh Laporan Hari Ini</a>
+                    <form action="{{ url('download-today-report-ph', $sensorph->id) }}" method="POST">
+                        @csrf
+                        <div class="dropdown">
+                            <button class="btn p-0" type="button" id="orederStatistics" data-bs-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                <i class="bx bx-dots-vertical-rounded"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="orederStatistics">
+                                <button class="btn dropdown-item" type="submit">Unduh Laporan Hari Ini</button>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
                 <div class="card-body">
                     <div class="d-flex justify-content-center align-items-center mb-3">
@@ -59,9 +62,19 @@
     </div>
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">
-                Histori Pengukuran
-            </h5>
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 class="card-title mb-0">
+                    Histori Pengukuran
+                </h5>
+                <form action="{{ url('download-reports-ph', $sensorph->id) }}" method="POST" id="exportForm" class="d-flex">
+                    @csrf
+                    <div class="input-group">
+                        <input type="date" class="form-control" aria-describedby="button-addon2" name="startDate" required>
+                        <input type="date" class="form-control" aria-describedby="button-addon2" name="endDate" required>
+                        <button class="btn btn-outline-success" type="submit" id="button-addon2">Export</button>
+                    </div>
+                </form>
+            </div>
             <div class="table-responsive">
                 <table class="table table-bordered" id="datatable">
                     <thead>
@@ -73,13 +86,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($historyLaporan as $reports)
-                        <tr>
-                            <td class="text-center">{{ $loop->iteration }}</td>
-                            <td class="text-center">{{ $reports->created_at }}</td>
-                            <td class="text-center">{{ $reports->ph_value}} pH</td>
-                            <td class="text-center">{{ $reports->ph_voltage}} volt</td>
-                        </tr>
+                        @foreach ($historyLaporan as $reports)
+                            <tr>
+                                <td class="text-center">{{ $loop->iteration }}</td>
+                                <td class="text-center">{{ $reports->created_at }}</td>
+                                <td class="text-center">{{ $reports->ph_value }} pH</td>
+                                <td class="text-center">{{ $reports->ph_voltage }} volt</td>
+                            </tr>
                         @endforeach
                     </tbody>
                 </table>
@@ -120,7 +133,7 @@
             }
 
             function updatePHStatus() {
-                const sensorId = '{{$sensorph->id}}'; // Ganti dengan ID sensor yang sesuai
+                const sensorId = '{{ $sensorph->id }}'; // Ganti dengan ID sensor yang sesuai
                 const apiUrl = `/api/data_last_ph/${sensorId}`;
 
                 $.ajax({
@@ -185,7 +198,8 @@
                             dataLabels: {
                                 value: {
                                     formatter: function() {
-                                        return latestPH.toFixed(1); // Tampilkan nilai asli pH dengan satu tempat desimal
+                                        return latestPH.toFixed(
+                                        1); // Tampilkan nilai asli pH dengan satu tempat desimal
                                     }
                                 }
                             }
@@ -196,7 +210,7 @@
 
             // Fungsi untuk mendapatkan data pH terbaru dari API
             function fetchLastPH() {
-                const sensorId = '{{$sensorph->id}}'; // Ganti dengan ID sensor yang sesuai
+                const sensorId = '{{ $sensorph->id }}'; // Ganti dengan ID sensor yang sesuai
                 const apiUrl = `/api/data_last_ph/${sensorId}`;
 
                 $.ajax({
@@ -316,7 +330,6 @@
 
     {{-- script chart pH --}}
     <script>
-
         var ctx = document.getElementById('ChartpH').getContext('2d');
 
         var ChartPh = new Chart(ctx, {
@@ -359,7 +372,7 @@
 
         function updateChartPh() {
             $.ajax({
-                url: '/api/data_ph_chart/{{$sensorph->id}}',
+                url: '/api/data_ph_chart/{{ $sensorph->id }}',
                 method: 'GET',
                 dataType: 'json',
                 success: function(response) {
