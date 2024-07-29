@@ -155,5 +155,6 @@
     @stack('kualitas')
     @stack('turbidity')
     @stack('ph')
+    @stack('meteran')
   </body>
 </html>
