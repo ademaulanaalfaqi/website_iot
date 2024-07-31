@@ -70,7 +70,7 @@
                         </div>
                     </div>
                     <span class="fw-semibold d-block mb-1">pH</span>
-                    <h3 class="card-title mb-2">{{$ph}} pH</h3>
+                    <h3 class="card-title mb-2" id="PhText"></h3>
                 </div>
             </div>
         </div>
@@ -83,7 +83,7 @@
                         </div>
                     </div>
                     <span class="fw-semibold d-block mb-1">Turbidity</span>
-                    <h3 class="card-title mb-2">{{$turbi}} NTU</h3>
+                    <h3 class="card-title mb-2" id="TurbiText"></h3>
                 </div>
             </div>
         </div>
@@ -122,6 +122,18 @@
                     if (sensor.tekanan && sensor.tekanan.length > 0) {
                         sensor.tekanan.forEach(function(tekanan) {
                             tooltipContent += `${tekanan.nilai_tekanan} psi`;
+                        });
+                    }
+
+                    if (sensor.ph && sensor.ph.length > 0) {
+                        sensor.ph.forEach(function(ph) {
+                            tooltipContent += `${ph.ph_value} pH`;
+                        });
+                    }
+
+                    if (sensor.turbi && sensor.turbi.length > 0) {
+                        sensor.turbi.forEach(function(turbi) {
+                            tooltipContent += `${turbi.turbi_ntu} NTU`;
                         });
                     }
 
@@ -211,5 +223,55 @@
     </script>
 
     {{-- script ari --}}
+    <script>
+        $(document).ready(function() {
+            function displayAPIPhText() {
+                $.ajax({
+                    url: '/api/data_last_ph/pH-kGK',
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response) {
+                            $('#PhText').text(response.data.ph_value + ' pH');
+                        } else {
+                            $('#PhText').text('Tidak ada data');
+                        }
+                    },
+                    error: function(error) {
+                        console.error('Error fetching data:', error);
+                    }
+                });
+            }
 
+            displayAPIPhText();
+
+            setInterval(displayAPIPhText, 3000);
+        });
+    </script>
+
+<script>
+    $(document).ready(function() {
+        function displayAPITurbiText() {
+            $.ajax({
+                url: '/api/data_last_turbi/Tur-0FU',
+                method: 'GET',
+                dataType: 'json',
+                success: function(response) {
+                    if (response) {
+                        $('#TurbiText').text(response.turbi_ntu + ' NTU');
+                    } else {
+                        $('#TurbiText').text('Tidak ada data');
+                    }
+                },
+                error: function(error) {
+                    console.error('Error fetching data:', error);
+                }
+            });
+        }
+
+        displayAPITurbiText();
+
+        setInterval(displayAPITurbiText, 3000);
+    });
+</script>
 @endpush

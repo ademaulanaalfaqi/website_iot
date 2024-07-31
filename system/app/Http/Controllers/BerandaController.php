@@ -24,6 +24,10 @@ class BerandaController extends Controller
             $query->latest()->first();
         }, 'tekanan' => function ($query) {
             $query->latest()->first();
+        },'ph' => function ($query) {
+            $query->latest()->first();
+        },'turbi' => function ($query) {
+            $query->latest()->first();
         }])->get();
         return response()->json($sensors);
     }

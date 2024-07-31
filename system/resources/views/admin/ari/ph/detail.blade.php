@@ -82,16 +82,14 @@
                             <th class="text-center">No</th>
                             <th class="text-center">Tanggal Pengukuran</th>
                             <th class="text-center">pH</th>
-                            <th class="text-center">v</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($historyLaporan as $reports)
                             <tr>
                                 <td class="text-center">{{ $loop->iteration }}</td>
-                                <td class="text-center">{{ $reports->created_at }}</td>
+                                <td class="text-center">{{ \Carbon\Carbon::parse($reports->created_at)->format('d-m-Y H:i:s') }}</td>
                                 <td class="text-center">{{ $reports->ph_value }} pH</td>
-                                <td class="text-center">{{ $reports->ph_voltage }} volt</td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -153,22 +151,18 @@
                 });
             }
 
-            // Memanggil updatePHStatus saat halaman dimuat
             updatePHStatus();
-
-            // Memperbarui status pH setiap 3600 detik (1 jam)
-            setInterval(updatePHStatus, 3600 * 1000);
+            setInterval(updatePHStatus, 3000);
         });
     </script>
 
     {{-- gauge dan text last ph --}}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Fungsi untuk memperbarui nilai pH
-            function updatePHGauge(latestPH) {
-                const percentagePH = (latestPH / 14) * 100; // Konversi nilai pH menjadi persen
 
-                // Tentukan warna berdasarkan nilai pH
+            function updatePHGauge(latestPH) {
+                const percentagePH = (latestPH / 14) * 100;
+
                 let fillColor;
                 if (latestPH < 6.5) {
                     fillColor = chartColors.danger;
@@ -199,7 +193,7 @@
                                 value: {
                                     formatter: function() {
                                         return latestPH.toFixed(
-                                        1); // Tampilkan nilai asli pH dengan satu tempat desimal
+                                        1);
                                     }
                                 }
                             }
@@ -208,9 +202,8 @@
                 });
             }
 
-            // Fungsi untuk mendapatkan data pH terbaru dari API
             function fetchLastPH() {
-                const sensorId = '{{ $sensorph->id }}'; // Ganti dengan ID sensor yang sesuai
+                const sensorId = '{{ $sensorph->id }}';
                 const apiUrl = `/api/data_last_ph/${sensorId}`;
 
                 $.ajax({
@@ -233,52 +226,51 @@
             }
 
             fetchLastPH();
-            setInterval(fetchLastPH, 60000);
+            setInterval(fetchLastPH, 3000);
 
-            // Warna dan konfigurasi chart
             const chartColors = {
-                cardBackground: '#f5f5f5', // Ganti dengan warna latar belakang card
-                textColor: '#333', // Ganti dengan warna teks
-                success: '#00ff00', // Warna hijau untuk nilai pH antara 6 dan 7
-                danger: '#ff0000' // Warna merah untuk nilai pH lebih dari 7
+                cardBackground: '#f5f5f5',
+                textColor: '#333',
+                success: '#00ff00',
+                danger: '#ff0000'
             };
 
             // Pengaturan dasar chart
             const options = {
-                series: [], // Data yang ditampilkan (nilai pH terbaru dalam persen)
+                series: [],
                 chart: {
-                    type: 'radialBar', // Tipe chart
-                    height: 240 // Tinggi chart
+                    type: 'radialBar',
+                    height: 240 t
                 },
-                labels: ['latest pH'], // Label chart
+                labels: ['latest pH'],
                 plotOptions: {
                     radialBar: {
-                        startAngle: -130, // Sudut awal chart
-                        endAngle: 130, // Sudut akhir chart
-                        offsetY: 10, // Offset vertikal
+                        startAngle: -130,
+                        endAngle: 130,
+                        offsetY: 10,
                         hollow: {
-                            size: '55%' // Ukuran hollow di tengah
+                            size: '55%'
                         },
                         track: {
-                            background: chartColors.cardBackground, // Warna latar lintasan
-                            strokeWidth: '100%' // Lebar garis lintasan
+                            background: chartColors.cardBackground,
+                            strokeWidth: '100%'
                         },
                         dataLabels: {
                             name: {
-                                fontSize: '15px', // Ukuran font label nama
-                                fontWeight: 600, // Ketebalan font label nama
-                                offsetY: 15, // Offset vertikal label nama
-                                color: chartColors.textColor, // Warna label nama
-                                fontFamily: 'Public Sans' // Keluarga font
+                                fontSize: '15px',
+                                fontWeight: 600,
+                                offsetY: 15,
+                                color: chartColors.textColor,
+                                fontFamily: 'Public Sans'
                             },
                             value: {
-                                fontSize: '20px', // Ukuran font label nilai
-                                fontWeight: 500, // Ketebalan font label nilai
-                                offsetY: -25, // Offset vertikal label nilai
-                                color: chartColors.textColor, // Warna label nilai
-                                fontFamily: 'Public Sans', // Keluarga font
+                                fontSize: '20px',
+                                fontWeight: 500,
+                                offsetY: -25,
+                                color: chartColors.textColor,
+                                fontFamily: 'Public Sans',
                                 formatter: function() {
-                                    return '0.0'; // Tampilkan nilai awal 0.0
+                                    return '0.0';
                                 }
                             }
                         }
@@ -297,7 +289,7 @@
                     }
                 },
                 stroke: {
-                    dashArray: 5 // Pola garis putus-putus
+                    dashArray: 5
                 },
                 grid: {
                     padding: {
@@ -319,11 +311,9 @@
                 }
             };
 
-            // Inisialisasi chart
             const chartElement = document.querySelector('#pHperhari');
             const pHperhari = new ApexCharts(chartElement, options);
 
-            // Render chart
             pHperhari.render();
         });
     </script>
@@ -394,8 +384,7 @@
             });
         }
 
-        setInterval(updateChartPh, 3600);
-
+        setInterval(updateChartPh, 3000);
         updateChartPh();
     </script>
 @endpush

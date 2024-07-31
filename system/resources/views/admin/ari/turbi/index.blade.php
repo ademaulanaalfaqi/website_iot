@@ -16,7 +16,6 @@
                                     <th>ID</th>
                                     <th>Keterangan Lokasi</th>
                                     <th>Turbidity (NTU)</th>
-                                    <th>v</th>
                                     <th>Selengkapnya</th>
                                 </tr>
                             </thead>
@@ -26,7 +25,6 @@
                                         <td>{{ $sensor->id }}</td>
                                         <td>{{ $sensor->keterangan }}</td>
                                         <td id="ntu">{{ $sensor->ntu }} NTU</td>
-                                        <td id="voltage">{{ $sensor->voltage }} volt</td>
                                         <td>
                                             <div class="btn-group">
                                                 <a href="{{ url('detail-sensor-kekeruhan', $sensor->id) }}"

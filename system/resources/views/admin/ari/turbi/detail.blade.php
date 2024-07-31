@@ -78,16 +78,14 @@
                             <th class="text-center">No</th>
                             <th class="text-center">Tanggal Pengukuran</th>
                             <th class="text-center">NTU</th>
-                            <th class="text-center">v</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($historyLaporan as $reports)
                         <tr>
                             <td class="text-center">{{ $loop->iteration }}</td>
-                            <td class="text-center">{{ $reports->created_at }}</td>
+                            <td class="text-center">{{ \Carbon\Carbon::parse($reports->created_at)->format('d-m-Y H:i:s') }}</td>
                             <td class="text-center">{{ $reports->turbi_ntu}}</td>
-                            <td class="text-center">{{ $reports->turbi_voltage}}</td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -101,36 +99,6 @@
     <script>
         new DataTable('#datatable');
     </script>
-    {{-- <script>
-        function fetchReportsByDate() {
-            var date = $('#reportDate').val();
-            $.ajax({
-                url: '{{ route('admin.reports.by-date') }}',
-                method: 'GET',
-                data: { date: date },
-                dataType: 'json',
-                success: function(response) {
-                    var tableBody = $('#reportTableBody');
-                    tableBody.empty(); // Kosongkan tabel sebelum menambahkan data baru
-
-                    response.forEach(function(report, index) {
-                        var row = `<tr>
-                            <td class="text-center">${index + 1}</td>
-                            <td class="text-center">${report.created_at}</td>
-                            <td class="text-center"><a href="/download/report/${report.id}" class="btn btn-primary">Unduh</a></td>
-                        </tr>`;
-                        tableBody.append(row);
-                    });
-                },
-                error: function(error) {
-                    console.error('Error fetching data:', error);
-                }
-            });
-        }
-
-        $('#fetchReports').on('click', fetchReportsByDate);
-    </script> --}}
-
     {{-- peta --}}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -151,8 +119,8 @@
             function getTurbiStatus(turbi_ntu) {
                 if (turbi_ntu < 10) {
                     return '<div class="alert alert-success">Mantap, Airnye jernih coy!!</div>';
-                } else if (turbi_ntu >= 10 && turbi_ntu <= 25) {
-                    return '<div class="alert alert-primary">Airnye cukup jernih lah</div>';
+                } else if (turbi_ntu >= 10 && turbi_ntu <= 50) {
+                    return '<div class="alert alert-primary">Airnye keruh lah</div>';
                 } else {
                     return '<div class="alert alert-danger">Air e lumpur e nin keruh nyeee</div>';
                 }
@@ -177,7 +145,7 @@
             }
 
             updateTurbiStatus();
-            setInterval(updateTurbiStatus, 60000);
+            setInterval(updateTurbiStatus, 3000);
         });
     </script>
 
@@ -204,8 +172,7 @@
             }
 
             dataLastTurbi();
-
-            setInterval(dataLastTurbi, 60000);
+            setInterval(dataLastTurbi, 3000);
         });
     </script>
 
@@ -251,15 +218,14 @@
             }
         });
 
-        // Fungsi untuk melakukan pembaruan data setiap 5 detik
         function updateChartTurbidity() {
             $.ajax({
-                url: '/api/data_turbi_chart/{{ $sensorturbi->id }}', // Ganti dengan URL API yang sesuai di Laravel
+                url: '/api/data_turbi_chart/{{ $sensorturbi->id }}',
                 method: 'GET',
                 dataType: 'json',
                 success: function(response) {
                     if (response.length > 0) {
-                        response.reverse(); // Membalik urutan data jika diperlukan
+                        response.reverse();
                         var labels = response.map(data => data.created_at);
                         var turbi_value = response.map(data => data.turbi_ntu);
 
@@ -275,7 +241,7 @@
             });
         }
 
-        setInterval(updateChartTurbidity, 60000);
+        setInterval(updateChartTurbidity, 3000);
         updateChartTurbidity();
     </script>
 @endpush
