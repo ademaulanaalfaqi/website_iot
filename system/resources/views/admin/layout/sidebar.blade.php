@@ -15,8 +15,8 @@
 
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
     <div class="app-brand demo">
-      <a href="" class="app-brand-link">
-        {{-- <span class="app-brand-logo demo">
+        <a href="" class="app-brand-link">
+            {{-- <span class="app-brand-logo demo">
           <svg
             width="25"
             viewBox="0 0 25 42"
@@ -71,111 +71,113 @@
             </g>
           </svg>
         </span> --}}
-        <span class="app-brand-text demo fw-bolder ms-2 text-capitalize">IoT- <span class="text-lowercase">website</span></span>
-      </a>
+            <span class="app-brand-text demo fw-bolder ms-2 text-capitalize">IoT- <span
+                    class="text-lowercase">website</span></span>
+        </a>
 
-      <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
-        <i class="bx bx-chevron-left bx-sm align-middle"></i>
-      </a>
+        <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+            <i class="bx bx-chevron-left bx-sm align-middle"></i>
+        </a>
     </div>
 
     <div class="menu-inner-shadow"></div>
 
     <ul class="menu-inner py-1">
-      <!-- Dashboard -->
-      <li class="menu-item {{checkSubRouteActive('beranda')}}">
-        <a href="{{url('beranda')}}" class="menu-link">
-          <i class="menu-icon tf-icons bx bx-home-circle"></i>
-          <div data-i18n="Analytics">Dashboard</div>
-        </a>
-      </li>
-
-      <li class="menu-item {{checkRouteActive('ph')}} {{checkRouteActive('kekeruhan')}}
-       {{checkRouteActive('detail-sensor-ph/{ph}')}} {{checkRouteActive('detail-sensor-kekeruhan/{turbi}')}}">
-        <a href="javascript:void(0);" class="menu-link menu-toggle">
-          <i class="menu-icon tf-icons bx bx-layout"></i>
-          <div data-i18n="Layouts">Kualitas Air</div>
-        </a>
-        <ul class="menu-sub">
-          <li class="menu-item {{checkSubRouteActive('ph')}} {{checkSubRouteActive('detail-sensor-ph/{ph}')}}">
-            <a href="{{url('ph')}}" class="menu-link">
-              <div data-i18n="Without menu">Ph</div>
+        <!-- Dashboard -->
+        <li class="menu-item {{ checkSubRouteActive('beranda') }}">
+            <a href="{{ url('beranda') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div data-i18n="Analytics">Dashboard</div>
             </a>
-          </li>
-        </ul>
-        <ul class="menu-sub">
-          <li class="menu-item {{checkSubRouteActive('kekeruhan')}} {{checkSubRouteActive('detail-sensor-kekeruhan/{turbi}')}}">
-            <a href="{{url('kekeruhan')}}" class="menu-link">
-              <div data-i18n="Without menu">Turbidity</div>
-            </a>
-          </li>
-        </ul>
-      </li>
+        </li>
 
-      <li class="menu-item
-        {{checkRouteActive('debit')}}
-        {{checkRouteActive('tambah-sensor-debit')}}
-        {{checkRouteActive('detail-sensor-debit/{id}')}}
-        {{checkRouteActive('edit-sensor-debit/{id}')}}
-        {{checkRouteActive('tekanan')}}
-        {{checkRouteActive('tambah-sensor-tekanan')}}
-        {{checkRouteActive('detail-sensor-tekanan/{id}')}}
-        {{checkRouteActive('edit-sensor-tekanan/{id}')}}
+        <li
+            class="menu-item {{ checkRouteActive('ph') }} {{ checkRouteActive('kekeruhan') }}
+       {{ checkRouteActive('detail-sensor-ph/{ph}') }} {{ checkRouteActive('detail-sensor-kekeruhan/{turbi}') }}">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-layout"></i>
+                <div data-i18n="Layouts">Kualitas Air</div>
+            </a>
+            <ul class="menu-sub">
+                <li
+                    class="menu-item {{ checkSubRouteActive('ph') }} {{ checkSubRouteActive('detail-sensor-ph/{ph}') }}">
+                    <a href="{{ url('ph') }}" class="menu-link">
+                        <div data-i18n="Without menu">Ph</div>
+                    </a>
+                </li>
+            </ul>
+            <ul class="menu-sub">
+                <li
+                    class="menu-item {{ checkSubRouteActive('kekeruhan') }} {{ checkSubRouteActive('detail-sensor-kekeruhan/{turbi}') }}">
+                    <a href="{{ url('kekeruhan') }}" class="menu-link">
+                        <div data-i18n="Without menu">Turbidity</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <li
+            class="menu-item
+        {{ checkRouteActive('debit') }}
+        {{ checkRouteActive('tambah-sensor-debit') }}
+        {{ checkRouteActive('detail-sensor-debit/{id}') }}
+        {{ checkRouteActive('edit-sensor-debit/{id}') }}
+        {{ checkRouteActive('tekanan') }}
+        {{ checkRouteActive('tambah-sensor-tekanan') }}
+        {{ checkRouteActive('detail-sensor-tekanan/{id}') }}
+        {{ checkRouteActive('edit-sensor-tekanan/{id}') }}
         ">
-        <a href="javascript:void(0);" class="menu-link menu-toggle">
-          <i class="menu-icon tf-icons bx bx-layout"></i>
-          <div data-i18n="Layouts">Debit & Tekanan</div>
-        </a>
-        <ul class="menu-sub">
-          <li class="menu-item
-            {{checkSubRouteActive('debit')}}
-            {{checkSubRouteActive('tambah-sensor-debit')}}
-            {{checkSubRouteActive('detail-sensor-debit/{id}')}}
-            {{checkSubRouteActive('edit-sensor-debit/{id}')}}
-            ">
-            <a href="{{url('debit')}}" class="menu-link">
-              <div data-i18n="Without menu">Debit</div>
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-layout"></i>
+                <div data-i18n="Layouts">Debit & Tekanan</div>
             </a>
-          </li>
-        </ul>
-        <ul class="menu-sub">
-          <li class="menu-item
-            {{checkSubRouteActive('tekanan')}}
-            {{checkSubRouteActive('tambah-sensor-tekanan')}}
-            {{checkSubRouteActive('detail-sensor-tekanan/{id}')}}
-            {{checkSubRouteActive('edit-sensor-tekanan/{id}')}}
+            <ul class="menu-sub">
+                <li
+                    class="menu-item
+            {{ checkSubRouteActive('debit') }}
+            {{ checkSubRouteActive('tambah-sensor-debit') }}
+            {{ checkSubRouteActive('detail-sensor-debit/{id}') }}
+            {{ checkSubRouteActive('edit-sensor-debit/{id}') }}
             ">
-            <a href="{{url('tekanan')}}" class="menu-link">
-              <div data-i18n="Without menu">Tekanan</div>
-            </a>
-          </li>
-        </ul>
-      </li>
+                    <a href="{{ url('debit') }}" class="menu-link">
+                        <div data-i18n="Without menu">Debit</div>
+                    </a>
+                </li>
+            </ul>
+            <ul class="menu-sub">
+                <li
+                    class="menu-item
+            {{ checkSubRouteActive('tekanan') }}
+            {{ checkSubRouteActive('tambah-sensor-tekanan') }}
+            {{ checkSubRouteActive('detail-sensor-tekanan/{id}') }}
+            {{ checkSubRouteActive('edit-sensor-tekanan/{id}') }}
+            ">
+                    <a href="{{ url('tekanan') }}" class="menu-link">
+                        <div data-i18n="Without menu">Tekanan</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
 
-      <li class="menu-item {{checkSubRouteActive('pengguna')}}">
-        <a href="{{url('pengguna')}}" class="menu-link">
-          <i class="menu-icon tf-icons bx bx-user"></i>
-          <div data-i18n="Analytics">Pengguna</div>
-        </a>
-      </li>
-      
-      <li class="menu-item {{checkRouteActive('meteran')}}">
-        <a href="javascript:void(0);" class="menu-link menu-toggle">
-          <i class="menu-icon tf-icons bx bx-layout"></i>
-          <div data-i18n="Layouts">Data Meteran</div>
-        </a>
-        <ul class="menu-sub">
-          <li class="menu-item {{checkSubRouteActive('meteran')}}">
-            <a href="{{url('meteran')}}" class="menu-link">
-              <div data-i18n="Without menu">Meteran</div>
+        <li class="menu-item {{ checkRouteActive('meteran') }}">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-layout"></i>
+                <div data-i18n="Layouts">Data Meteran</div>
             </a>
-          </li>
-          <li class="menu-item {{checkSubRouteActive('pelanggan')}}">
-            <a href="{{url('pelanggan')}}" class="menu-link">
-              <div data-i18n="Without menu">Pelanggan</div>
+            <ul class="menu-sub">
+                <li class="menu-item {{ checkSubRouteActive('pelanggan') }}">
+                    <a href="{{ url('pelanggan') }}" class="menu-link">
+                        <div data-i18n="Without menu">Pelanggan</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <li class="menu-item {{ checkSubRouteActive('pengguna') }}">
+            <a href="{{ url('pengguna') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-user"></i>
+                <div data-i18n="Analytics">Pengguna</div>
             </a>
-          </li>
-        </ul>
-      </li>
+        </li>
     </ul>
-  </aside>
+</aside>

@@ -14,25 +14,27 @@
                             <thead>
                                 <tr class="text-nowrap">
                                     <th>ID</th>
-                                    <th>AKSI</th>
                                     <th>Nama Pelanggan</th>
                                     <th>Alamat</th>
+                                    <th>AKSI</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($pelanggan as $data)
                                     <tr>
                                         <td scope="row">{{ $data->id }}</td>
-                                        <td>
-                                            <a href="{{ url('detail-pelanggan', $data->id) }}" class="btn btn-dark"><i
-                                                    class="bx bx-info-circle"></i></a>
-                                            <a href="{{ url('edit-pelanggan', $data->id) }}" class="btn btn-warning"><i
-                                                    class="bx bx-edit"></i></a>
-                                            <button type="button" class="btn btn-danger"><i
-                                                    class="bx bx-trash"></i></button>
-                                        </td>
                                         <td>{{ $data->nama }}</td>
                                         <td>{{ $data->alamat }}</td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <a href="{{ url('detail-pelanggan', $data->id) }}" class="btn btn-dark"><i
+                                                        class="bx bx-info-circle"></i></a>
+                                                <a href="{{ url('edit-pelanggan', $data->id) }}" class="btn btn-warning"><i
+                                                        class="bx bx-edit"></i></a>
+                                                <a href="{{ url("hapus-data-pelanggan/$data->id") }}" class="btn btn-danger"><i
+                                                        class="bx bx-trash"></i></a>
+                                            </div>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

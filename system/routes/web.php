@@ -2,13 +2,14 @@
 
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Ari\TurbiController;
-use App\Http\Controllers\Ari\PhController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Ari\PhController;
 use App\Http\Controllers\BerandaController;
 use App\Http\Controllers\Ade\DebitController;
+use App\Http\Controllers\Ari\TurbiController;
 use App\Http\Controllers\Ade\TekananController;
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Jupi\PelangganController;
 
 
 /*
@@ -58,13 +59,27 @@ Route::middleware(['auth'])->group(function () {
     Route::post('export-data-sensor-tekanan/{id}', [TekananController::class, 'exportDataSensorTekanan']);
 
     //arii
-Route::get('/kekeruhan', [TurbiController::class, 'turbi']);
-Route::post('/tambah-sensor-kekeruhan', [TurbiController::class, 'menambahkanSensorTurbi']);
-Route::get('/detail-sensor-kekeruhan/{turbi}', [TurbiController::class, 'detailSensorTurbi']);
-Route::put('/edit-sensor-kekeruhan/{turbi}', [TurbiController::class, 'updateSensorTurbi']);
-Route::delete('/hapus-sensor-kekeruhan/{turbi}', [TurbiController::class, 'hapusSensorTurbi']);
-Route::get('/download-today-report-turbi/{turbi}', [TurbiController::class, 'downloadTodayReportTurbi']);
-// Route::get('/download/reports/turbi', [TurbiController::class, 'downloadReportsTurbi'])->name('download.reportsTurbi');
+    Route::get('/kekeruhan', [TurbiController::class, 'turbi']);
+    Route::post('/tambah-sensor-kekeruhan', [TurbiController::class, 'menambahkanSensorTurbi']);
+    Route::get('/detail-sensor-kekeruhan/{turbi}', [TurbiController::class, 'detailSensorTurbi']);
+    Route::put('/edit-sensor-kekeruhan/{turbi}', [TurbiController::class, 'updateSensorTurbi']);
+    Route::delete('/hapus-sensor-kekeruhan/{turbi}', [TurbiController::class, 'hapusSensorTurbi']);
+    Route::get('/download-today-report-turbi/{turbi}', [TurbiController::class, 'downloadTodayReportTurbi']);
+    // Route::get('/download/reports/turbi', [TurbiController::class, 'downloadReportsTurbi'])->name('download.reportsTurbi');
+
+    //Jupi
+    // route::get('/detail-sensor-meteran/{id}', [MeteranController::class, 'detailSensorMeteran']);
+    Route::get('/meteran', [PelangganController::class, 'meteran']);
+    Route::get('/meter-data/{id}', [PelangganController::class, 'chartMeter']);
+    Route::get('relay', [PelangganController::class, 'relay']);
+    Route::get('/pelanggan', [PelangganController::class, 'index']);
+    Route::get('/tambah-pelanggan', [PelangganController::class, 'create']);
+    Route::post('/tambah-pelanggan', [PelangganController::class, 'store']);
+    Route::get('/detail-pelanggan/{id}', [PelangganController::class, 'detail']);
+    Route::get('/edit-pelanggan/{id}', [PelangganController::class, 'edit']);
+    Route::post('/edit-pelanggan/{id}', [PelangganController::class, 'update']);
+    Route::get('/hapus-data-pelanggan/{id}', [PelangganController::class, 'destroy']);
+    Route::post('export-data-sensor-pelanggan/{id}', [PelangganController::class, 'exportDataPelanggan']);
 });
 
 
@@ -75,14 +90,3 @@ Route::put('/edit-sensor-ph/{ph}', [PhController::class, 'updateSensorPh']);
 Route::delete('/hapus-sensor-ph/{ph}', [PhController::class, 'hapusSensorPh']);
 Route::get('/download-today-report-ph/{ph}', [PhController::class, 'downloadTodayReportPh']);
 // Route::get('/download/reports/ph', [PhController::class, 'downloadReportsPh'])->name('download.reportsPh');
-
-
-// route::get('/detail-sensor-meteran/{id}', [MeteranController::class, 'detailSensorMeteran']);
-Route::get('/meteran', [PelangganController::class, 'meteran']);
-Route::get('/meter-data/{id}', [PelangganController::class, 'chartMeter']);
-Route::get('/pelanggan', [PelangganController::class, 'index']);
-Route::get('/tambah-pelanggan', [PelangganController::class, 'create']);
-Route::post('/tambah-pelanggan', [PelangganController::class, 'store']);
-Route::get('/detail-pelanggan/{id}', [PelangganController::class, 'detail']);
-Route::get('/edit-pelanggan/{id}', [PelangganController::class, 'edit']);
-Route::post('/edit-pelanggan/{id}', [PelangganController::class, 'update']);

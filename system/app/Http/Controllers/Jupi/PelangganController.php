@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Jupi;
 
-use App\Http\Controllers\Controller;
 use App\Models\Pelanggan;
 use App\Models\WaterFlow;
 use Illuminate\Support\Str;
+use App\Exports\MeterExport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PelangganController extends Controller
 {
@@ -94,10 +96,10 @@ class PelangganController extends Controller
         return redirect('pelanggan');
     }
 
-    public function destroy(Pelanggan $pelanggan)
+    public function destroy($id)
     {
-        $pelanggan->delete();
-        return redirect()->route('pelanggan.index')->with('success', 'Pelanggan deleted successfully.');
+        Pelanggan::destroy($id);
+        return back();
     }
 
     // public function chartMeter()
@@ -139,15 +141,33 @@ class PelangganController extends Controller
         // Hitung total volume
         $totalVolume = $meteran->sum('volume');
 
-        // Tarif per liter
-        $tarifPerLiter = 3; // Misalnya 3 IDR per liter
+        // Tarif per kubik berdasarkan volume
+        if ($totalVolume <= 10) {
+            $tarifPerM3 = 2200;
+        } elseif ($totalVolume <= 20) {
+            $tarifPerM3 = 2400;
+        } else {
+            $tarifPerM3 = 2750;
+        }
 
         // Menghitung total biaya
-        $totalBiaya = $totalVolume * $tarifPerLiter;
+        $totalBiaya = $totalVolume * $tarifPerM3;
 
         // Ambil data pelanggan
         $pelanggan = Pelanggan::all(); // atau sesuaikan dengan kebutuhan Anda
 
         return view('admin.jupi.index', compact('meteran', 'totalVolume', 'totalBiaya', 'id', 'pelanggan'));
+    }
+
+    function exportDataPelanggan(Request $request, $id)
+    {
+        $request->validate([
+            'export_date' => 'required|date',
+        ]);
+
+        $exportDate = $request->input('export_date');
+        $fileName = $id . '_' . $exportDate . '.xlsx';
+
+        return Excel::download(new MeterExport($id, $exportDate), $fileName);
     }
 }
