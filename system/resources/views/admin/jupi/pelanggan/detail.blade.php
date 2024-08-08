@@ -6,6 +6,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Grafik Volume Air</h5>
                     <canvas id="chartMeter" height="150"></canvas>
+                    {{-- <button class="btn btn-outline-danger" type="" id="button-addon2">Nyala/Mati</button> --}}
                 </div>
             </div>
         </div>
@@ -24,13 +25,23 @@
                     <div class="row row-bordered">
                         <div class="table-responsive text-nowrap">
                             <div class="col-md-12">
-                                <h5 class="card-title">Detail Data Pelanggan</h5>
+                                <h5 class="card-title">Detail Data Pelanggan dan Sensor</h5>
+                                <form action="{{ url('export-data-sensor-pelanggan', $pelanggan->id) }}" method="POST"
+                                    id="exportForm">
+                                    @csrf
+                                    <div class="col-md-3">
+                                        <input type="date" class="form-control" aria-describedby="button-addon2"
+                                            name="export_date">
+                                        <button class="btn btn-outline-success" type="submit"
+                                            id="button-addon2">Export</button>
+                                    </div>
+                                </form>
                                 <table class="table">
                                     <thead>
                                         <tr class="text-nowrap">
                                             <th>Nama Pelanggan</th>
                                             <th>Alamat</th>
-                                            <th>Tarif</th>
+                                            <th>Tarif/M³</th>
                                             <th>Id Sensor</th>
                                             <th>Jenis Alat Sensor</th>
                                             <th>Keterangan Lokasi Sensor</th>
@@ -61,7 +72,6 @@
     {{-- script chart meteran --}}
 
     <script>
-
         // Mendapatkan elemen canvas
         var ctx = document.getElementById('chartMeter').getContext('2d');
 
@@ -91,7 +101,7 @@
                     x: {
                         title: {
                             display: true,
-                            text: 'Waktu'
+                            text: 'Waktu Indonesia Barat'
                         }
                     }
                 },
@@ -111,18 +121,18 @@
                     if (response.length > 0) {
                         response.reverse(); // Membalik urutan data jika diperlukan
 
-                        // Memformat created_at menjadi format tanggal yang lebih sederhana
+                        // Memformat created_at menjadi waktu Indonesia bagian barat (WIB)
                         var labels = response.map(data => {
                             var date = new Date(data.created_at);
-                            return date.toLocaleString(
-                                'en-GB', { // Gunakan 'en-GB' untuk format tanggal UK (DD/MM/YYYY HH:mm)
-                                    day: '2-digit',
-                                    month: '2-digit',
-                                    year: 'numeric',
+                            var localDate = new Date(date.getTime() + (7 * 60 * 60 * 1000)); // GMT+7
+                            return localDate.toLocaleString(
+                                'id-ID', { // Gunakan 'id-ID' untuk format Indonesia
                                     hour: '2-digit',
-                                    minute: '2-digit'
+                                    minute: '2-digit',
+                                    second: '2-digit'
                                 });
                         });
+
                         var volume = response.map(data => data.volume);
 
                         // Memperbarui data dan label pada grafik
@@ -138,7 +148,8 @@
             });
         }
 
-        setInterval(updateChartMeter, 5000); // Setiap 5 detik
+
+        setInterval(updateChartMeter, 1000); // Setiap 1 detik
         updateChartMeter();
     </script>
 

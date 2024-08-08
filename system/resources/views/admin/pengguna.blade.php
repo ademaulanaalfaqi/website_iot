@@ -89,7 +89,7 @@
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel2">Tambah Pengguna</h5>
+                        <h5 class="modal-title" id="exampleModalLabel2">Edit Data Pengguna</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <form action="{{url('edit-pengguna', $pengguna->id)}}" method="post">
