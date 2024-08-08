@@ -8,15 +8,18 @@
                         <h5 class="m-0 me-2">pH hari ini</h5>
                         <small class="text-muted">Hitungan pH/jam</small>
                     </div>
-                    <div class="dropdown">
-                        <button class="btn p-0" type="button" id="orederStatistics" data-bs-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                            <i class="bx bx-dots-vertical-rounded"></i>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="orederStatistics">
-                            <a class="dropdown-item" href="{{ url('download-today-report-ph',$sensorph->id)}}">Unduh Laporan Hari Ini</a>
+                    <form action="{{ url('download-today-report-ph', $sensorph->id) }}" method="POST">
+                        @csrf
+                        <div class="dropdown">
+                            <button class="btn p-0" type="button" id="orederStatistics" data-bs-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                <i class="bx bx-dots-vertical-rounded"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="orederStatistics">
+                                <button class="btn dropdown-item" type="submit">Unduh Laporan Hari Ini</button>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
                 <div class="card-body">
                     <div class="d-flex justify-content-center align-items-center mb-3">
@@ -59,9 +62,19 @@
     </div>
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">
-                Histori Pengukuran
-            </h5>
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 class="card-title mb-0">
+                    Histori Pengukuran
+                </h5>
+                <form action="{{ url('download-reports-ph', $sensorph->id) }}" method="POST" id="exportForm" class="d-flex">
+                    @csrf
+                    <div class="input-group">
+                        <input type="date" class="form-control" aria-describedby="button-addon2" name="startDate" required>
+                        <input type="date" class="form-control" aria-describedby="button-addon2" name="endDate" required>
+                        <button class="btn btn-outline-success" type="submit" id="button-addon2">Export</button>
+                    </div>
+                </form>
+            </div>
             <div class="table-responsive">
                 <table class="table table-bordered" id="datatable">
                     <thead>
@@ -69,17 +82,15 @@
                             <th class="text-center">No</th>
                             <th class="text-center">Tanggal Pengukuran</th>
                             <th class="text-center">pH</th>
-                            <th class="text-center">v</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($historyLaporan as $reports)
-                        <tr>
-                            <td class="text-center">{{ $loop->iteration }}</td>
-                            <td class="text-center">{{ $reports->created_at }}</td>
-                            <td class="text-center">{{ $reports->ph_value}} pH</td>
-                            <td class="text-center">{{ $reports->ph_voltage}} volt</td>
-                        </tr>
+                        @foreach ($historyLaporan as $reports)
+                            <tr>
+                                <td class="text-center">{{ $loop->iteration }}</td>
+                                <td class="text-center">{{ \Carbon\Carbon::parse($reports->created_at)->format('d-m-Y H:i:s') }}</td>
+                                <td class="text-center">{{ $reports->ph_value }} pH</td>
+                            </tr>
                         @endforeach
                     </tbody>
                 </table>
@@ -120,7 +131,7 @@
             }
 
             function updatePHStatus() {
-                const sensorId = '{{$sensorph->id}}'; // Ganti dengan ID sensor yang sesuai
+                const sensorId = '{{ $sensorph->id }}'; // Ganti dengan ID sensor yang sesuai
                 const apiUrl = `/api/data_last_ph/${sensorId}`;
 
                 $.ajax({
@@ -140,22 +151,18 @@
                 });
             }
 
-            // Memanggil updatePHStatus saat halaman dimuat
             updatePHStatus();
-
-            // Memperbarui status pH setiap 3600 detik (1 jam)
-            setInterval(updatePHStatus, 3600 * 1000);
+            setInterval(updatePHStatus, 3000);
         });
     </script>
 
     {{-- gauge dan text last ph --}}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Fungsi untuk memperbarui nilai pH
-            function updatePHGauge(latestPH) {
-                const percentagePH = (latestPH / 14) * 100; // Konversi nilai pH menjadi persen
 
-                // Tentukan warna berdasarkan nilai pH
+            function updatePHGauge(latestPH) {
+                const percentagePH = (latestPH / 14) * 100;
+
                 let fillColor;
                 if (latestPH < 6.5) {
                     fillColor = chartColors.danger;
@@ -185,7 +192,8 @@
                             dataLabels: {
                                 value: {
                                     formatter: function() {
-                                        return latestPH.toFixed(1); // Tampilkan nilai asli pH dengan satu tempat desimal
+                                        return latestPH.toFixed(
+                                        1);
                                     }
                                 }
                             }
@@ -194,9 +202,8 @@
                 });
             }
 
-            // Fungsi untuk mendapatkan data pH terbaru dari API
             function fetchLastPH() {
-                const sensorId = '{{$sensorph->id}}'; // Ganti dengan ID sensor yang sesuai
+                const sensorId = '{{ $sensorph->id }}';
                 const apiUrl = `/api/data_last_ph/${sensorId}`;
 
                 $.ajax({
@@ -219,52 +226,51 @@
             }
 
             fetchLastPH();
-            setInterval(fetchLastPH, 60000);
+            setInterval(fetchLastPH, 3000);
 
-            // Warna dan konfigurasi chart
             const chartColors = {
-                cardBackground: '#f5f5f5', // Ganti dengan warna latar belakang card
-                textColor: '#333', // Ganti dengan warna teks
-                success: '#00ff00', // Warna hijau untuk nilai pH antara 6 dan 7
-                danger: '#ff0000' // Warna merah untuk nilai pH lebih dari 7
+                cardBackground: '#f5f5f5',
+                textColor: '#333',
+                success: '#00ff00',
+                danger: '#ff0000'
             };
 
             // Pengaturan dasar chart
             const options = {
-                series: [], // Data yang ditampilkan (nilai pH terbaru dalam persen)
+                series: [],
                 chart: {
-                    type: 'radialBar', // Tipe chart
-                    height: 240 // Tinggi chart
+                    type: 'radialBar',
+                    height: 240 t
                 },
-                labels: ['latest pH'], // Label chart
+                labels: ['latest pH'],
                 plotOptions: {
                     radialBar: {
-                        startAngle: -130, // Sudut awal chart
-                        endAngle: 130, // Sudut akhir chart
-                        offsetY: 10, // Offset vertikal
+                        startAngle: -130,
+                        endAngle: 130,
+                        offsetY: 10,
                         hollow: {
-                            size: '55%' // Ukuran hollow di tengah
+                            size: '55%'
                         },
                         track: {
-                            background: chartColors.cardBackground, // Warna latar lintasan
-                            strokeWidth: '100%' // Lebar garis lintasan
+                            background: chartColors.cardBackground,
+                            strokeWidth: '100%'
                         },
                         dataLabels: {
                             name: {
-                                fontSize: '15px', // Ukuran font label nama
-                                fontWeight: 600, // Ketebalan font label nama
-                                offsetY: 15, // Offset vertikal label nama
-                                color: chartColors.textColor, // Warna label nama
-                                fontFamily: 'Public Sans' // Keluarga font
+                                fontSize: '15px',
+                                fontWeight: 600,
+                                offsetY: 15,
+                                color: chartColors.textColor,
+                                fontFamily: 'Public Sans'
                             },
                             value: {
-                                fontSize: '20px', // Ukuran font label nilai
-                                fontWeight: 500, // Ketebalan font label nilai
-                                offsetY: -25, // Offset vertikal label nilai
-                                color: chartColors.textColor, // Warna label nilai
-                                fontFamily: 'Public Sans', // Keluarga font
+                                fontSize: '20px',
+                                fontWeight: 500,
+                                offsetY: -25,
+                                color: chartColors.textColor,
+                                fontFamily: 'Public Sans',
                                 formatter: function() {
-                                    return '0.0'; // Tampilkan nilai awal 0.0
+                                    return '0.0';
                                 }
                             }
                         }
@@ -283,7 +289,7 @@
                     }
                 },
                 stroke: {
-                    dashArray: 5 // Pola garis putus-putus
+                    dashArray: 5
                 },
                 grid: {
                     padding: {
@@ -305,18 +311,15 @@
                 }
             };
 
-            // Inisialisasi chart
             const chartElement = document.querySelector('#pHperhari');
             const pHperhari = new ApexCharts(chartElement, options);
 
-            // Render chart
             pHperhari.render();
         });
     </script>
 
     {{-- script chart pH --}}
     <script>
-
         var ctx = document.getElementById('ChartpH').getContext('2d');
 
         var ChartPh = new Chart(ctx, {
@@ -359,7 +362,7 @@
 
         function updateChartPh() {
             $.ajax({
-                url: '/api/data_ph_chart/{{$sensorph->id}}',
+                url: '/api/data_ph_chart/{{ $sensorph->id }}',
                 method: 'GET',
                 dataType: 'json',
                 success: function(response) {
@@ -381,8 +384,7 @@
             });
         }
 
-        setInterval(updateChartPh, 3600);
-
+        setInterval(updateChartPh, 3000);
         updateChartPh();
     </script>
 @endpush

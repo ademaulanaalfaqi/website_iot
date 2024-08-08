@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Ph;
+use App\Models\Turbi;
 use App\Models\FlowRate;
 use App\Models\Pressure;
 use Illuminate\Database\Eloquent\Model;
@@ -23,5 +25,15 @@ class Sensor extends Model
     function tekanan()
     {
         return $this->hasMany(Pressure::class, 'id_sensor');
+    }
+
+    function ph()
+    {
+        return $this->hasMany(Ph::class, 'id_sensor');
+    }
+
+    function turbi()
+    {
+        return $this->hasMany(Turbi::class, 'id_sensor');
     }
 }

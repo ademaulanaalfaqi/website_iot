@@ -16,7 +16,6 @@
                                     <th>ID</th>
                                     <th>Keterangan Lokasi</th>
                                     <th>Turbidity (NTU)</th>
-                                    <th>v</th>
                                     <th>Selengkapnya</th>
                                 </tr>
                             </thead>
@@ -26,7 +25,6 @@
                                         <td>{{ $sensor->id }}</td>
                                         <td>{{ $sensor->keterangan }}</td>
                                         <td id="ntu">{{ $sensor->ntu }} NTU</td>
-                                        <td id="voltage">{{ $sensor->voltage }} volt</td>
                                         <td>
                                             <div class="btn-group">
                                                 <a href="{{ url('detail-sensor-kekeruhan', $sensor->id) }}"
@@ -126,18 +124,38 @@
                             @csrf
                             @method('put')
                             <div class="row">
+                                <div class="col-mb-1 col-md-6">
+                                    <label class="form-label">Latitude</label>
+                                    <input type="text" name="latitude" id="latitude{{ $sensor->id }}"
+                                        class="form-control" placeholder="Latitude" value="{{ $sensor->latitude }}"
+                                        readonly />
+                                </div>
+                                <div class="col-mb-1 col-md-6">
+                                    <label class="form-label">Longitude</label>
+                                    <input type="text" name="longitude" id="longitude{{ $sensor->id }}"
+                                        class="form-control" placeholder="Longitude" value="{{ $sensor->longitude }}"
+                                        readonly />
+                                </div>
+                            </div>
                                 <div class="col mb-3">
                                     <label class="form-label">Ketarangan</label>
                                     <input type="text" name="keterangan" class="form-control"
                                         value="{{ $sensor->keterangan }}" />
                                 </div>
-                            </div>
+                                <div class="col mb-3">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div id="mapedit{{ $sensor->id }}" style="height: 400px; max-width: 100%;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
                                 Close
                             </button>
-                            <button type="submit" class="btn btn-primary">Save</button>
+                            <button type="submit" class="btn btn-primary">Simpan</button>
                         </div>
                     </form>
                 </div>
@@ -267,5 +285,46 @@
                 });
             });
         });
+    </script>
+    {{-- Map edit --}}
+    <script>
+        function initMapEdit(sensorId, latitude, longitude) {
+            var mapedit = L.map('mapedit' + sensorId).setView([latitude, longitude], 12);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(mapedit);
+
+            var marker = L.marker([latitude, longitude]).addTo(mapedit);
+
+            mapedit.on('click', function(e) {
+                var lat = e.latlng.lat;
+                var lng = e.latlng.lng;
+
+                if (marker) {
+                    marker.setLatLng(e.latlng);
+                } else {
+                    marker = L.marker(e.latlng).addTo(mapedit);
+                }
+
+                document.getElementById('latitude' + sensorId).value = lat;
+                document.getElementById('longitude' + sensorId).value = lng;
+            });
+
+            // Invalidate size after the map is fully shown
+            setTimeout(function() {
+                mapedit.invalidateSize();
+            }, 100);
+        }
+
+        function bindModalEvents(sensor) {
+            $('#modalEditSensor' + sensor.id).on('shown.bs.modal', function() {
+                initMapEdit(sensor.id, sensor.latitude, sensor.longitude);
+            });
+        }
+
+        @foreach ($sensor_turbi as $sensor)
+            bindModalEvents(@json($sensor));
+        @endforeach
     </script>
 @endpush
