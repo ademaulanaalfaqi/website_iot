@@ -148,7 +148,7 @@
                 });
             }
         }
-        setInterval(inisialisasiChart, 10000);
+        setInterval(inisialisasiChart, 3000);
         inisialisasiChart();
     </script>
 
@@ -216,7 +216,7 @@
             });
         }
 
-        setInterval(updateChartPressure, 10000);
+        setInterval(updateChartPressure, 3000);
 
         updateChartPressure();
     </script>
@@ -244,7 +244,7 @@
 
             displayAPIPressureText();
 
-            setInterval(displayAPIPressureText, 10000);
+            setInterval(displayAPIPressureText, 3000);
         });
     </script>
 

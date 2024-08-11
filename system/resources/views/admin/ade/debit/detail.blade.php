@@ -126,7 +126,7 @@
             });
         }
 
-        setInterval(updateChartFlow, 10000);
+        setInterval(updateChartFlow, 4000);
 
         updateChartFlow();
     </script>
@@ -156,7 +156,7 @@
 
             displayAPIText();
 
-            setInterval(displayAPIText, 10000);
+            setInterval(displayAPIText, 4000);
         });
     </script>
 
