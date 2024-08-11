@@ -121,7 +121,7 @@ class PelangganController extends Controller
     public function chartMeter()
     {
         // Ambil data dari database
-        $data = WaterFlow::all();
+        $data = WaterFlow::orderBy('id', 'desc')->take(24)->get();
 
         // Proses data menggunakan foreach
         foreach ($data as &$entry) {
