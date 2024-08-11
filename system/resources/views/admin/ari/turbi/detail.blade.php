@@ -118,11 +118,11 @@
         document.addEventListener('DOMContentLoaded', function() {
             function getTurbiStatus(turbi_ntu) {
                 if (turbi_ntu < 10) {
-                    return '<div class="alert alert-success">Mantap, Airnye jernih coy!!</div>';
+                    return '<div class="alert alert-success">Air jernih</div>';
                 } else if (turbi_ntu >= 10 && turbi_ntu <= 50) {
-                    return '<div class="alert alert-primary">Airnye keruh lah</div>';
+                    return '<div class="alert alert-primary">Air agak keruh</div>';
                 } else {
-                    return '<div class="alert alert-danger">Air e lumpur e nin keruh nyeee</div>';
+                    return '<div class="alert alert-danger">Air keruh</div>';
                 }
             }
 
