@@ -213,6 +213,7 @@
                     success: function(response) {
                         if (response.status === 'success') {
                             const latestPH = response.data.ph_value;
+                            console.log(latestPH);
                             updatePHGauge(latestPH);
                             $('#phValue').text(latestPH.toFixed(1));
                         } else {
@@ -240,7 +241,7 @@
                 series: [],
                 chart: {
                     type: 'radialBar',
-                    height: 240 t
+                    height: 240
                 },
                 labels: ['latest pH'],
                 plotOptions: {
