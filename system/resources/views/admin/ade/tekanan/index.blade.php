@@ -23,7 +23,7 @@
                                     <tr data-id="{{ $sensor->id }}">
                                         <td>{{ $sensor->id }}</td>
                                         <td>{{ $sensor->keterangan }}</td>
-                                        <td id="tekanan">{{ $sensor->tekanan }} psi</td>
+                                        <td id="tekanan">{{ $sensor->tekanan }} bar</td>
                                         <td>
                                             <button type="button"
                                                 class="btn p-0 dropdown-toggle hide-arrow"
@@ -94,7 +94,7 @@
                 success: function(response) {
                     response.forEach(sensor => {
                         var row = $('tr[data-id="' + sensor.id + '"]');
-                        row.find('#tekanan').text(sensor.tekanan + ' psi');
+                        row.find('#tekanan').text(sensor.tekanan + ' bar');
                     });
                 },
                 error: function(error) {

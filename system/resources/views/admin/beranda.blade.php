@@ -121,7 +121,7 @@
 
                     if (sensor.tekanan && sensor.tekanan.length > 0) {
                         sensor.tekanan.forEach(function(tekanan) {
-                            tooltipContent += `${tekanan.nilai_tekanan} psi`;
+                            tooltipContent += `${tekanan.nilai_tekanan} bar`;
                         });
                     }
 
@@ -205,7 +205,7 @@
                     dataType: 'json',
                     success: function(response) {
                         if (response) {
-                            $('#pressureText').text(response.nilai_tekanan + ' psi');
+                            $('#pressureText').text(response.nilai_tekanan + ' bar');
                         } else {
                             $('#pressureText').text('Tidak ada data');
                         }

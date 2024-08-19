@@ -13,7 +13,7 @@
                                     <div class="col border p-1">
                                         <p class="fs-1 m-0" id="pressureText" style="color: #566a7f"></p>
                                     </div>
-                                    <p class="m-0 my-2" style="font-weight: bold">psi</p>
+                                    <p class="m-0 my-2" style="font-weight: bold">bar</p>
                                 </div>
                             </div>
                         </div>
